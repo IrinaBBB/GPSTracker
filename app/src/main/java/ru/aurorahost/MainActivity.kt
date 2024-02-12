@@ -2,8 +2,11 @@ package ru.aurorahost
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import ru.aurorahost.databinding.ActivityMainBinding
+import ru.aurorahost.fragments.MainFragment
+import ru.aurorahost.fragments.SettingsFragment
+import ru.aurorahost.fragments.TracksFragment
+import ru.aurorahost.utils.openFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -13,16 +16,17 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         onBottomNavClicks()
+        openFragment(MainFragment.newInstance())
     }
 
     private fun onBottomNavClicks() {
         binding.nBar.setOnItemSelectedListener {
-            when(it.itemId) {
-                R.id.home -> {
-                    Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show()}
-                R.id.tracks -> { Toast.makeText(this, "Tracks", Toast.LENGTH_SHORT).show()}
-                R.id.settings -> {Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show()}
+            when (it.itemId) {
+                R.id.home -> openFragment(MainFragment.newInstance())
+                R.id.tracks -> openFragment(TracksFragment.newInstance())
+                R.id.settings -> openFragment(SettingsFragment.newInstance())
             }
-            true }
+            true
+        }
     }
 }
