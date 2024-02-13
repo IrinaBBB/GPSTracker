@@ -49,4 +49,8 @@ dependencies {
     // Shared Preferences
     implementation 'androidx.preference:preference-ktx:1.2.1'
 
+    // Open Street Map
+    implementation 'org.osmdroid:osmdroid-android:6.1.13'
+    implementation 'com.github.MKergall:osmbonuspack:6.7.0'
+
 }
