@@ -1,12 +1,14 @@
 package ru.aurorahost.fragments
 
+import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import ru.aurorahost.R
-import ru.aurorahost.databinding.ActivityMainBinding
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import org.osmdroid.config.Configuration
+import org.osmdroid.library.BuildConfig
 import ru.aurorahost.databinding.FragmentMainBinding
 
 class MainFragment : Fragment() {
@@ -17,8 +19,17 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        setMap()
         binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    private fun setMap() {
+        Configuration.getInstance().load(
+            activity as AppCompatActivity,
+            activity?.getSharedPreferences("osm_pref", Context.MODE_PRIVATE)
+        )
+        Configuration.getInstance().userAgentValue = BuildConfig.LIBRARY_PACKAGE_NAME
     }
 
     companion object {
