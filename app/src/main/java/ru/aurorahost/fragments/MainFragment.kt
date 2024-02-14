@@ -5,35 +5,40 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import org.osmdroid.config.Configuration
 import org.osmdroid.library.BuildConfig
-import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.CustomZoomButtonsController
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
 import ru.aurorahost.databinding.FragmentMainBinding
+import ru.aurorahost.utils.checkLocationPermission
+import ru.aurorahost.utils.registerPermissions
 
 class MainFragment : Fragment() {
 
     private lateinit var binding: FragmentMainBinding
+    private lateinit var locationPermissionRequest: ActivityResultLauncher<Array<String>>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        setMap()
+        setOSM()
         binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initMap()
+        initOSM()
+        locationPermissionRequest = registerPermissions(this, this::initOSM)
+        checkLocationPermission(requireActivity(), this::initOSM, locationPermissionRequest)
     }
 
-    private fun setMap() {
+    private fun setOSM() {
         Configuration.getInstance().load(
             activity as AppCompatActivity,
             activity?.getSharedPreferences("osm_pref", Context.MODE_PRIVATE)
@@ -41,7 +46,7 @@ class MainFragment : Fragment() {
         Configuration.getInstance().userAgentValue = BuildConfig.LIBRARY_PACKAGE_NAME
     }
 
-    private fun initMap() = with(binding) {
+    private fun initOSM() = with(binding) {
         map.apply {
             setMultiTouchControls(true)
             zoomController.setVisibility(CustomZoomButtonsController.Visibility.SHOW_AND_FADEOUT)
