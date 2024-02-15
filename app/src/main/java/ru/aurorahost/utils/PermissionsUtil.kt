@@ -1,12 +1,17 @@
 package ru.aurorahost.utils
 
 import android.Manifest
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.LocationManager
 import android.os.Build
+import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -20,6 +25,7 @@ fun registerPermissions(
     ) {
         if (it[Manifest.permission.ACCESS_FINE_LOCATION] == true) {
             initOSM()
+            checkLocationEnabled(fragment.requireActivity())
         } else {
             fragment.showToast("Location access denied. Enable for full map features.")
         }
@@ -51,6 +57,7 @@ private fun checkPermissionsVersionQ(
         )
     ) {
         initOSM()
+        checkLocationEnabled(context)
     } else {
         locationPermissionRequest.launch(
             arrayOf(
@@ -72,12 +79,30 @@ private fun checkPermissions(
         )
     ) {
         initOSM()
+        checkLocationEnabled(context)
     } else {
         locationPermissionRequest.launch(
             arrayOf(
                 Manifest.permission.ACCESS_FINE_LOCATION,
             )
         )
+    }
+}
+
+private fun checkLocationEnabled(activity: FragmentActivity) {
+    val locationManager = activity.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    val isEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+    if (!isEnabled) {
+        DialogManager.showLocationEnabledDialog(
+            activity as AppCompatActivity,
+            object : DialogManager.Listener {
+                override fun onClick() {
+                    activity.startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+                    //activity.startActivity(Intent(Settings.ACTION_APPLICATION_SETTINGS))
+                }
+            })
+    } else {
+        Toast.makeText(activity, "Location enabled", Toast.LENGTH_SHORT).show()
     }
 }
 

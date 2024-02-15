@@ -1,11 +1,13 @@
 package ru.aurorahost.fragments
 
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import org.osmdroid.config.Configuration
@@ -31,11 +33,11 @@ class MainFragment : Fragment() {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initOSM()
         locationPermissionRequest = registerPermissions(this, this::initOSM)
-        checkLocationPermission(requireActivity(), this::initOSM, locationPermissionRequest)
+        checkLocationPermission(requireActivity(), this::initOSM,  locationPermissionRequest)
     }
 
     private fun setOSM() {
@@ -45,7 +47,6 @@ class MainFragment : Fragment() {
         )
         Configuration.getInstance().userAgentValue = BuildConfig.LIBRARY_PACKAGE_NAME
     }
-
     private fun initOSM() = with(binding) {
         map.apply {
             setMultiTouchControls(true)

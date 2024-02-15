@@ -8,4 +8,6 @@
     <string name="update_time_summary">Location update time</string>
     <string name="track_color">Track color</string>
     <string name="track_color_summary">Choose track color</string>
+    <string name="location_disabled_title">Location disabled</string>
+    <string name="location_disabled_message">Do you want to enable location services?</string>
 </resources>
