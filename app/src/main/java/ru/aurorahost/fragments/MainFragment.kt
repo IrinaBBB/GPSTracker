@@ -3,6 +3,7 @@ package ru.aurorahost.fragments
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,6 +30,7 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         setOSM()
+        Log.d("MyLog", "onCreateView")
         binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -37,9 +39,13 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         locationPermissionRequest = registerPermissions(this, this::initOSM)
-        checkLocationPermission(requireActivity(), this::initOSM,  locationPermissionRequest)
     }
 
+    @RequiresApi(Build.VERSION_CODES.Q)
+    override fun onResume() {
+        super.onResume()
+        checkLocationPermission(requireActivity(), this::initOSM,  locationPermissionRequest)
+    }
     private fun setOSM() {
         Configuration.getInstance().load(
             activity as AppCompatActivity,
