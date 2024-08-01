@@ -10,4 +10,10 @@
     <string name="track_color_summary">Choose track color</string>
     <string name="location_disabled_title">Location disabled</string>
     <string name="location_disabled_message">Do you want to enable location services?</string>
+    <string name="average_speed_3_5_km_h">Average speed: 3.5 km/h</string>
+    <string name="center_map">center map</string>
+    <string name="distance_3_km">Distance: 3 km</string>
+    <string name="speed_2_km_h">Speed: 2 km/h</string>
+    <string name="start_stop_button">start/stop button</string>
+    <string name="time_00_00_00">Time: 00:00:00</string>
 </resources>

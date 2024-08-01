@@ -6,14 +6,94 @@
     android:layout_height="match_parent"
     tools:context=".fragments.MainFragment">
 
+<!--    Order is important here (Map View Should be first)-->
+
     <org.osmdroid.views.MapView
         android:id="@+id/map"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
+
+    </org.osmdroid.views.MapView>
+
+    <TextView
+        android:id="@+id/tvTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingEnd="3sp"
+        android:paddingStart="3sp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:background="#99FFFFFF"
+        android:text="@string/time_00_00_00"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fStartStop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/ic_play"
+        app:layout_constraintEnd_toEndOf="@+id/fCenter"
+        app:layout_constraintStart_toStartOf="@+id/fCenter"
+        app:layout_constraintTop_toBottomOf="@+id/fCenter"
+        android:contentDescription="@string/start_stop_button" />
+
+    <TextView
+        android:id="@+id/tvAvgSpeed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#99FFFFFF"
+        android:paddingEnd="3sp"
+        android:paddingStart="3sp"
+        android:text="@string/average_speed_3_5_km_h"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@+id/tvTime"
+        app:layout_constraintTop_toBottomOf="@+id/tvTime" />
+
+    <TextView
+        android:id="@+id/tvSpeed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingEnd="3sp"
+        android:paddingStart="3sp"
+        android:background="#99FFFFFF"
+        android:text="@string/speed_2_km_h"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@+id/tvAvgSpeed"
+        app:layout_constraintTop_toBottomOf="@+id/tvAvgSpeed" />
+
+    <TextView
+        android:id="@+id/tvDistance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingEnd="3sp"
+        android:paddingStart="3sp"
+        android:background="#99FFFFFF"
+        android:text="@string/distance_3_km"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="@+id/tvSpeed"
+        app:layout_constraintTop_toBottomOf="@+id/tvSpeed"
+        tools:visibility="visible" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fCenter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:src="@drawable/ic_location"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/center_map" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
